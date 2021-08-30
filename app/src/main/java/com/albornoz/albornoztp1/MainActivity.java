@@ -13,7 +13,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     private CustomReceiver mr;
-    private IntentFilter intent;
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +24,16 @@ public class MainActivity extends AppCompatActivity {
         // Instanciando BroadcastReceiver
         mr = new CustomReceiver();
         // Instanciando IntentFilter con sus acciones así el sistema sabe qué broadcast mandar
-        intent = new IntentFilter();
-        intent.addAction("android.hardware.usb.action.USB_STATE");
+        filter = new IntentFilter();
+        filter.addAction("android.hardware.usb.action.USB_STATE");
         // Acciones para probar con el emulador
-        intent.addAction(Intent.ACTION_POWER_DISCONNECTED);
-        intent.addAction(Intent.ACTION_POWER_CONNECTED);
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        filter.addAction(Intent.ACTION_POWER_CONNECTED);
     }
 
     public void registerBroadcastReceiver(View view) {
         // Registrar el Broadcast Receiver desde este contexto para que empiece a recibir Intents.
-        this.registerReceiver(mr, intent);
+        this.registerReceiver(mr, filter);
     }
 
     public void unregisterBroacastReceiver(View view) {
