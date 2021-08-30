@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Albornoz TP1</string>
+    <string name="registrar_broadcast_receiver">Registrar Broadcast Receiver</string>
+    <string name="detener_broadcast_receiver">Detener Broadcast Receiver</string>
 </resources>
