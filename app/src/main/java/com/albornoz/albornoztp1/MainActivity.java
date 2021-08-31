@@ -9,11 +9,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
     private CustomReceiver mr;
     private IntentFilter filter;
+    private Button reg_receiver, unreg_receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +29,30 @@ public class MainActivity extends AppCompatActivity {
         filter = new IntentFilter();
         filter.addAction("android.hardware.usb.action.USB_STATE");
         // Acciones para probar con el emulador
-        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-        filter.addAction(Intent.ACTION_POWER_CONNECTED);
-    }
+        //filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        //filter.addAction(Intent.ACTION_POWER_CONNECTED);
 
-    public void registerBroadcastReceiver(View view) {
-        // Registrar el Broadcast Receiver desde este contexto para que empiece a recibir Intents.
-        this.registerReceiver(mr, filter);
-    }
+        // Inicializando botones
+        reg_receiver = findViewById(R.id.startBroadcastReceiver);
+        unreg_receiver = findViewById(R.id.stopBroadcastReceiver);
 
-    public void unregisterBroacastReceiver(View view) {
-        // Desregistrar Broadcast Receiver para que deje de recibir Intents
-        this.unregisterReceiver(mr);
+        // Listeners botones
+        reg_receiver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.this.registerReceiver(mr, filter);
+                reg_receiver.setEnabled(false);
+                unreg_receiver.setEnabled(true);
+            }
+        });
+        unreg_receiver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.this.unregisterReceiver(mr);
+                reg_receiver.setEnabled(true);
+                unreg_receiver.setEnabled(false);
+            }
+        });
     }
 
     private void getPermissions() {

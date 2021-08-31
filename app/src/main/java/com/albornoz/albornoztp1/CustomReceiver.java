@@ -20,18 +20,28 @@ public class CustomReceiver extends BroadcastReceiver {
             switch (intentAction) {
                 // Caso del USB conectado
                 case "android.hardware.usb.action.USB_STATE":
-                    toastMessage = "USB CONECTADO";
-                    flag = 1;
+                    if (intent.getExtras().getBoolean("connected")) {
+                        toastMessage = "USB CONECTADO";
+                        flag = 1;
+                    }
+                    if (!intent.getExtras().getBoolean("connected")) {
+                        toastMessage = "USB DESCONECTADO";
+                        flag = 0;
+                    }
                     break;
+
                 // Caso del cargador conectado. Para usar emulador
-                case Intent.ACTION_POWER_CONNECTED:
+
+/*                case Intent.ACTION_POWER_CONNECTED:
                     toastMessage = "Cargador conectado";
                     flag = 1;
                     break;
                 case Intent.ACTION_POWER_DISCONNECTED:
                     toastMessage = "Cargador desconectado";
                     flag = 0;
-                    break;
+                    break;*/
+                default :
+                    flag = 0;
             }
 
             // Mostrando el toast
